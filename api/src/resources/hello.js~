@@ -19,7 +19,7 @@ exports.getPatID = function handler (request, reply) {
 }
 
 exports.getAllPatients = function handler (request, reply) {
-  reply(bl.getAllPatients())
+  reply(bl.getPatient())
 }
 
 

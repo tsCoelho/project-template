@@ -8,5 +8,13 @@ exports.sayHello = function (name) {
   return 'Hello ' + (name || 'World')
 }
 
+exports.getPatient = function (id) {
+return patient[id]
+}
+
+exports.getAllPatients = function() {
+return patient
+}
+
 },{}]},{},[1])(1)
 });
