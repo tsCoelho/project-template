@@ -1,42 +1,266 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <title>Log in page</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+   
+ <script src="/js/bl.js"></script>
+ <script src="/js/app.js"></script>
+  
+</head>
+<!--background-color:  #f4511e-->
+<style>
+.jumbotron { 
+	padding-top: 150px;
+    background-color:#21B6A8 ; /* Orange */
+    color: #ffffff;
+    text-align:center;
+    padding-bottom: 180px;
+}
+
+.btn-lg {
+	background-color:#177F75 ; /* Orange */
+    color: #ffffff;
+}
+.help-block{
+	color: #ffffff;
+}
+</style>
+
+<body class = "container" data-ng-app='cwApp' xmlns:ng="http://angularjs.org" data-ng-controller="cwCtrl" data-ng-init="cwSwitch=true" >
+<div ng-hide= 'true'>
+
+  <div class="jumbotron text-center">
+    <h1>InSure App+</h1>
     
-    <link rel="icon" href="/img/favicon.ico">
+     <div class="container">
 
-    <title>SISE-CWEB</title>
+      <form class="form-signin">
+		  
+		  
+		<label for="inputUser" class="sr-only">Username</label>
+		<input type="user" id="inputUser" class="col-sm-10 form-control" size="1" placeholder="Username" required autofocus>
+        
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                 <span class="help-block text-right" >Forgot your password?</span>
+        
+        <button class="btn btn-lg  btn-sucess" type="submit">Sign in</button>
+        
+        <!---
+        <div class="checkbox text-left">
+          <label>
+            <input type="checkbox" value="remember-me"> Remember me          
+          </label>
+        </div>
+-->
+         <span class="help-block" >Create an account</span>
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/jumbotron-narrow.css" rel="stylesheet">
-    
-  </head>
+      </form>
 
-  <body>
-    <div class="container">
-      <div class="header clearfix">
-        <nav>
-          <ul class="nav nav-pills pull-right">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">About</a></li>
-            <li role="presentation"><a href="#">Contact</a></li>
-          </ul>
-        </nav>
-        <h3 class="text-muted">SISE-CWEB</h3>
-      </div>
 
-      <div class="jumbotron">
-        <h1>Jumbotron heading</h1>
-        <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-        <p><a class="btn btn-lg btn-success" href="#" role="button">Action!</a></p>
-      </div>
 
     </div> <!-- /container -->
+    
+    
+    
+  </div>
+  
+ </div> <!-- 1b -->
+ 
+ <div> <!--2-->
 
-    <script src="/js/bl.js"></script>
-    <script src="/js/app.js"></script>
-  </body>
-</html>
+
+ <nav class="navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">InSure App</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Patients</a></li>
+        <li><a href="#">Medical Acts</a></li> 
+        <li><a href="#">Medical Reports</a></li> 
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Dr. Egas Moniz</a></li>
+        <li>     <span>   <div class="spacer10"></div></span>        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    
+ <div class = "container">
+	<div class="row">
+	  <div class="col-sm-4">
+		  <h2>Waiting list</h2>
+		  <button type="button" class="list-group-item">D.Dinis</button>
+		  <button type="button" class="list-group-item">D.Fernando</button>
+
+
+<!--
+
+
+ OLA
+ 
+ 
+ 
+ 
+ 
+  -->
+	  
+	  
+	  </div>
+	  <div class="col-sm-8">
+	<h2>Insurance Requests</h2>	   
+	<div class="panel panel-warning">
+      <div class="panel-heading"><b>Pending</b></div>
+      <div class="panel-body">D.Sancho I</div>
+    </div>
+    
+ <!-- <div class="panel-group"> -->
+ 
+    <div class="panel panel-success">
+      <div class="panel-heading">
+		  <b>Accepted</b>
+		  </div>
+      <div class="panel-body">Afonso Henriques</div>
+    </div>
+
+    <div class="panel panel-danger ">
+      <div class="panel-heading">
+		  <b>Rejected</b>
+		  </div>
+      <div class="panel-body ">D.Sebastiao</div>
+    </div>
+  </div>
+	  
+	  </div>
+	</div>
+</div>
+  
+ </div> <!--2-->
+ 
+ <div> <!--3-->
+	<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">InSure App</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">Patients</a></li>
+        <li><a href="#">Medical Acts</a></li> 
+        <li><a href="#">Medical Reports</a></li> 
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Dr. Egas Moniz</a></li>
+        <li>     <span>   <div class="spacer10"></div></span>        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    
+
+	<div class="row">
+		
+	  <div class="col-sm-4" data-ng-controller="patientCtrl">
+		  <h2>Patient info</h2>
+		<ul class="list-group">
+		  <li class="list-group-item">Name: {patient[0].name} </li>
+		  <li class="list-group-item">Patient ID: </li>
+		  <li class="list-group-item">Policy type: </li>
+		  
+		  
+		</ul>
+	  
+	  </div>
+	  <div class="col-sm-8">
+		  
+		  
+	<h2>Medical acts</h2>
+          <table class="table table-striped" data-ng-controller="actsCtrl">
+			   <tr>
+        <th>Name: </th>
+        <th>Cost (Eur)</th>
+        <th>Reimbursement</th>
+        <th></th>
+      </tr>
+	<tr data-ng-repeat="a in acts">
+	  <td> </td>
+	  <td>  </td>
+	  <td>10</td>
+	  <td>
+		<button type="button" class="btn btn-default"><b>Delete</b></button>
+		</td>
+	</tr>
+      </table>
+      
+      
+    <!--  
+  <table class="table table-striped" >
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Cost ()</th>
+        <th>Reimbursement</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Back X-ray</td>
+        <td>50</td>
+        <td>80</td>
+    <td class="align-center">
+		<button type="button" class="btn btn-default"><b>-</b></button>
+		</td>
+      </tr>
+      <tr>
+        <td>Ben-u-ron prescription</td>
+        <td>2</td>
+        <td>50</td>
+		<td>
+		<button type="button" class="btn btn-default"><b>-</b></button>
+		</td>
+      </tr>
+    
+    </tbody>
+
+  </table>
+-->
+
+ <button type="button" class="btn btn-default center-block" aria-label="plus-medical-act">Add
+	 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+  </div>
+
+	  
+	  </div>
+	</div>
+</div>
+
+ </div> <!--3-->
+ </body>
+ 
+ 
+
+ 
+ </html>
