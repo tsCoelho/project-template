@@ -1,44 +1,62 @@
 /* globals bl */
 
-//var patient = [{"patID":0,"name":"Tomás Silva","policy_number":1000,"policy_type":0},{"patID":1,"name":"Tomás Santos","policy_number":1001,"policy_type":2},{"patID":2,"name":"Francisco Santos","policy_number":1002,"policy_type":1},{"patID":3,"name":"Mariana Pereira","policy_number":1003,"policy_type":2},{"patID":4,"name":"Leonor Oliveira","policy_number":1004,"policy_type":0},{"patID":5,"name":"Santiago Ferreira","policy_number":1005,"policy_type":1},{"patID":6,"name":"Rodrigo Silva","policy_number":1006,"policy_type":1},{"patID":7,"name":"João Martins","policy_number":1007,"policy_type":2},{"patID":8,"name":"Carolina Ferreira","policy_number":1008,"policy_type":0},{"patID":9,"name":"Beatriz Santos","policy_number":1009,"policy_type":2},{"patID":10,"name":"Leonor Costa","policy_number":1010,"policy_type":2},{"patID":11,"name":"Maria Ferreira","policy_number":1011,"policy_type":0},{"patID":12,"name":"Leonor Pereira","policy_number":1012,"policy_type":0},{"patID":13,"name":"Leonor Costa","policy_number":1013,"policy_type":0},{"patID":14,"name":"Tomás Ferreira","policy_number":1014,"policy_type":1},{"patID":15,"name":"João Martins","policy_number":1015,"policy_type":2},{"patID":16,"name":"Rodrigo Costa","policy_number":1016,"policy_type":3},{"patID":17,"name":"Matilde Silva","policy_number":1017,"policy_type":0},{"patID":18,"name":"Beatriz Pereira","policy_number":1018,"policy_type":0},{"patID":19,"name":"Guilherme Oliveira","policy_number":1019,"policy_type":2}]
-
-
 console.log(bl.sayHello())
 
 var app = angular.module('app',[]);
 
-app.controller('cwCtrl', function($scope){
+app.controller('cwCtrl', function($scope, $rootScope){
+	
 	$scope.currentSection = 1
-	
-	$scope.testFunc= function(a){
-	 $scope.currentSection = 3
-    console.log("Patient name is "+a);
-}
-    
-    $scope.currentSection = function (b){
-		console.log("currentSection is ",b)
-	}
-    
 
+	$scope.changeSect = function(){
+		$scope.currentSection = 2
+	}
 	
-	
+	$scope.testFunc= function(pat){
+		$scope.selPat = pat
+		$scope.currentSection = 3
+		console.log("Patient name is "+pat.name);
+}  
 			});
-			
-			
-app.controller('patientCtrl', function($scope, $http){
+	
+
+app.controller('actsCtrl', function($scope, $rootScope, $http){
 	$http({
 		method: 'GET',
-		url: 'http://tiago-virtualbox:9000/patient'
+		url: 'http://tiago-virtualbox:9000/act'
 	}).then(function successCallback(response) {
+	
+    $scope.act = response.data;
 
-    $scope.patient = response.data;
-    
+  }, function errorCallback(response) {
+     
+  });
+})	
+
+app.controller('insuranceReqCtrl', function($scope, $rootScope, $http){
+	$http({
+		method: 'GET',
+		url: 'http://tiago-virtualbox:9000/request'
+	}).then(function successCallback(response) {
+	
+    $scope.request = response.data;
+
   }, function errorCallback(response) {
      
   });
   
-  
-  
+})			
+			
+app.controller('patientCtrl', function($scope, $rootScope, $http){
+	$http({
+		method: 'GET',
+		url: 'http://tiago-virtualbox:9000/patient'
+	}).then(function successCallback(response) {
+		
+    $scope.patient = response.data;
+
+  }, function errorCallback(response) {
+     
+  });
   
 })			
-

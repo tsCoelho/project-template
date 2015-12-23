@@ -24,3 +24,18 @@ server.route({
   path: '/patient',
   handler: resources.hello.getAllPatients
 })
+
+server.route({
+  method: 'GET',
+  path: '/request',
+  handler: resources.hello.getAllRequests
+})
+
+
+server.route({
+  method: 'GET',
+  path: '/act',
+  handler: resources.hello.getAllActs
+})
+
+

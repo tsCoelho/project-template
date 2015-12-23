@@ -10,6 +10,7 @@ exports.getGB = function handler (request, reply) {
   reply(bl.sayGoodbye())
 }
 
+
 exports.post = function handler (request, reply) {
   reply(bl.sayHello(request.payload.name))
 }
@@ -19,9 +20,18 @@ exports.getPatID = function handler (request, reply) {
 }
 
 exports.getAllPatients = function handler (request, reply) {
-  reply(bl.getPatient())
+  reply(bl.getAllPatients())
+}
+
+exports.getAllRequests= function handler (request, reply) {
+  reply(bl.getAllRequests())
+}
+
+exports.getAllActs= function handler (request, reply) {
+  reply(bl.getAllActs())
 }
 
 
+depois tem ede ter bueee javascript com angular para ficar bonito e responsive
 
-
+e dai eq faz os gets e posts e  o crl

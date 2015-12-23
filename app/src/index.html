@@ -15,13 +15,13 @@
    <style>
       .jumbotron { 
       padding-top: 150px;
-      background-color:#21B6A8 ; /* Orange */
+      background-color:#21B6A8 ; 
       color: #ffffff;
       text-align:center;
       padding-bottom: 180px;
       }
-      .btn-lg {
-      background-color:#177F75 ; /* Orange */
+      .sign-in-btn {
+      background-color:#177F75 ; 
       color: #ffffff;
       }
       .help-block{
@@ -29,7 +29,7 @@
       }
    </style>
    <body class = "container" data-ng-app='app'  data-ng-controller="cwCtrl" data-ng-init="currentSection = 1" >
-      <div ng-show= "currentSection === 1" >
+      <div ng-show= "currentSection === 1" > leva essa condiçao
          <!-- 1 -->
          <div class="jumbotron text-center">
             <h1>InSure App+</h1>
@@ -40,7 +40,9 @@
                   <label for="inputPassword" class="sr-only">Password</label>
                   <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
                   <span class="help-block text-right" >Forgot your password?</span>
-                  <button class="btn btn-lg  btn-sucess"  ng-click="currentSection = 2 ">Sign in</button>
+                  <button class="btn btn-lg  btn-sucess sign-in-btn"  ng-click="currentSection = 2 ">Sign in</button>
+                  
+                  
                   <!--- type="submit">
                      <div class="checkbox text-left">
                      <label>
@@ -56,6 +58,7 @@
       </div>
       <!-- 1b -->
       <div ng-show= "currentSection === 2">
+		  
          <!--2-->
          <nav class="navbar">
             <div class="container-fluid">
@@ -89,27 +92,27 @@
             <div class="row">
                <div class="col-sm-4" data-ng-controller="patientCtrl">
                   <h2>Waiting list</h2>
-                  <button  ng-click='testFunc(pat.name)'  type="button" class="list-group-item" ng-repeat="pat in patient | orderBy : 'name' ">
+                  <button  ng-click='testFunc(pat)' type="button" class="list-group-item btn-lg" ng-repeat="pat in patient | orderBy : 'name' ">
                   {{pat.name}}
                   </button>
                </div>
-               <div class="col-sm-8">
+               <div class="col-sm-8" data-ng-controller="insuranceReqCtrl">
                   <h2>Insurance Requests</h2>
                   <div class="panel panel-warning">
                      <div class="panel-heading"><b>Pending</b></div>
-                     <div class="panel-body">D.Sancho I</div>
+                     <div class="panel-body" ng-repeat ='r in request | filter: { status: "PENDING" } | limitTo:5:5' >{{r.reqID}}</div>
                   </div>
                   <div class="panel panel-success">
                      <div class="panel-heading">
                         <b>Accepted</b>
                      </div>
-                     <div class="panel-body">Afonso Henriques</div>
+                     <div class="panel-body" ng-repeat ='r in request | filter: { status: "ACCEPTED" } | limitTo:5:5 ' >{{r.reqID}}</div>
                   </div>
                   <div class="panel panel-danger ">
                      <div class="panel-heading">
                         <b>Rejected</b>
                      </div>
-                     <div class="panel-body ">D.Sebastiao</div>
+                     <div class="panel-body" ng-repeat ='r in request | filter: { status: "REJECTED" } | limitTo:5:5 ' >{{r.reqID}}</div>
                   </div>
                </div>
             </div>
@@ -130,8 +133,8 @@
                </div>
                <div class="collapse navbar-collapse" id="myNavbar">
                   <ul class="nav navbar-nav">
-                     <li class="active"><a href="#">Home</a></li>
-                     <li><a href="#">Patients</a></li>
+                     <li class="active" nq-click="changeSect()" ><a href="#">Home</a></li>
+                     <li><a href="#" nq-click="changeSect()">Patient LALALA </a></li>
                      <li><a href="#">Medical Acts</a></li>
                      <li><a href="#">Medical Reports</a></li>
                   </ul>
@@ -151,28 +154,48 @@
             <div class="col-sm-4" >
                <h2>Patient info</h2>
                <ul class="list-group">
-                  <li class="list-group-item">Name:  </li>
-                  <li class="list-group-item">Patient ID: </li>
-                  <li class="list-group-item">Policy type: </li>
+                  <li class="list-group-item">Name:  {{selPat.name}}</li>
+                  <li class="list-group-item">Patient ID: {{selPat.patID}} </li>
+                  <li class="list-group-item">Policy type: {{selPat.policy_type}} </li>
+                  <!-- Single button -->
+<div class="btn-group">
+  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Action <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu">
+    <li><a href="#">Action</a></li>
+    <li><a href="#">Another action</a></li>
+    <li><a href="#">Something else here</a></li>
+    <li role="separator" class="divider"></li>
+    <li><a href="#">Separated link</a></li>
+  </ul>
+</div>
                </ul>
             </div>
-            <div class="col-sm-8">
+            <div class="col-sm-8" nq-controller='patientCtrl'>
                <h2>Medical acts</h2>
                <table class="table table-striped" >
                   <tr>
-                     <th>Name: </th>
+                     <th>Name </th>
                      <th>Cost (Eur)</th>
                      <th>Reimbursement</th>
-                     <th></th>
-                  </tr>
-                  <tr >
+                     </tr>
+                  
+                  <tr ng-repeat="a in patient">
+					<td>{{ a.name }}</td>
+					<td>{{ a.policy_type }}</td>
+					<td>0</td>
+				  </tr>
+				  <!--
+                  <tr>
+                     <td>ng-repeat="x in names" </td>
                      <td> </td>
-                     <td>  </td>
-                     <td>10</td>
+                     <td> </td>
                      <td>
                         <button type="button" class="btn btn-default"><b>Delete</b></button>
                      </td>
                   </tr>
+                  -->
                </table>
                <button type="button" class="btn btn-default center-block" aria-label="plus-medical-act">Add
                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
