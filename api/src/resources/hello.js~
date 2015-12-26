@@ -31,7 +31,7 @@ exports.getAllActs= function handler (request, reply) {
   reply(bl.getAllActs())
 }
 
+exports.createMR= function handler (request, reply) {
+  reply(bl.addMedReport(request.payload.repID,request.payload.date,request.payload.docID,request.payload.patID,request.payload.actID,request.payload.actual_reimb_perc))
+}
 
-depois tem ede ter bueee javascript com angular para ficar bonito e responsive
-
-e dai eq faz os gets e posts e  o crl
