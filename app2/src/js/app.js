@@ -5,7 +5,9 @@ var app = angular.module('app',[]);
 app.controller('cwCtrl', function($scope, $http,$rootScope){
 	
 	$scope.currentSection = 1
-
+$scope.hello= function(){
+	console.log('Hello from section2')
+}
 	$scope.changeSect = function(){
 		$scope.currentSection = 2
 	}
@@ -42,6 +44,19 @@ app.controller('cwCtrl', function($scope, $http,$rootScope){
 		});	
 
 		}
+		
+		
+		 $http({
+				method: 'GET',
+				url: 'http://localhost:9000/buffer'
+			}).then(function successCallback(response) {
+				
+			$scope.medRepBuffer = response.data;
+
+		  }, function errorCallback(response) {
+			 
+		  });
+		
 	}  
 		
 		
@@ -51,6 +66,17 @@ app.controller('cwCtrl', function($scope, $http,$rootScope){
 	}).then(function successCallback(response) {
 	
     $scope.act = response.data;
+
+	}, function errorCallback(response) {
+     
+	});
+	
+	$http({
+		method: 'GET',
+		url: 'http://localhost:9000/act_rmb'
+	}).then(function successCallback(response) {
+	
+    $scope.act_rmb = response.data;
 
 	}, function errorCallback(response) {
      
@@ -119,54 +145,79 @@ app.controller('cwCtrl', function($scope, $http,$rootScope){
 			});	
 		
 		}	
-	
-
-			
-			
-			
-		$scope.BuffermedRepList= []
-			
+				
 	
 		// Add Medical Act to Patient
 		
 		$scope.addmedReport = function(medR){
-			
-			console.log($scope.selPat)
-			$scope.selAct = medR
-			
-			$scope.medRepList.push(medR)
 		
-		var req = {
-		method: 'POST',
-		url: 'http://localhost:9000/report',
-		headers: {
-		'Content-Type': 'application/json'
-		},
-		data: { "repID": $scope.repID++,
-				"date": "27/12/2015",
-				"docID": $scope.doc.docID,
-				"patID": $scope.selPat.patID,
-				"actID": $scope.selAct.actID,
-				"actual_reimb_perc": ""
-			 }
-			 
+				$scope.selAct = medR;
+				
+				var req = {
+				method: 'POST',
+				url: 'http://localhost:9000/add/buffer/report',
+				headers: {
+				'Content-Type': 'application/json'
+				},
+				data: { "repID": $scope.repID++,
+						"date": "27/12/2015",
+						"docID": $scope.doc.docID,
+						"patID": $scope.selPat.patID,
+						"actID": $scope.selAct.actID,
+						"actual_reimb_perc": ""
+					 }
+					 
+				}
+				$http(req).then(function successCallback(response) {
+				
+				
+				$scope.medRepBuffer = response.data;
+				
+				}, function errorCallback(response) {
+				 
+				});	
+					
+				console.log('Add medical report request sent!')	
+		
+		//($scope.selAct.actID,$scope.selAct.policy_type)
+		
+		function computeReimb(act_rmb,actid,policytype){
+			for (var i = 0; i<act_rmb.length;i++){
+				if (actid === act_rmb[i].actID){
+					if(policytype === act_rmb[i].policy_type){
+					console.log('Found REIMBURSEMENT')
+						return act_rmb[i].reimb_percentage
+					}
+				}
+			}
+			console.log('Didnt find reimb')
+			return 1
 		}
-		$http(req).then(function successCallback(response) {
 		
 		
-		//$scope.medRepHist = response.data;
 		
-		}, function errorCallback(response) {
-		 
-		});	
-			
-		console.log('Add medical report request sent!')	
+		$scope.selAct.reimb = computeReimb($scope.act_rmb,$scope.selAct.actID,$scope.selAct.policy_type)
+		
+		
 
-			
 		}
 		
-		$scope.dropmedReport = function(index){
-			$scope.medRepList.splice(index,1)
+		$scope.dropmedReport = function(mrepID){
+			console.log(mrepID)
+					$http({
+						method: 'DELETE',
+						url: 'http://localhost:9000/buffer/'+mrepID
+							}).then(function successCallback(response) {
+								
+							$scope.medRepBuffer = response.data;
+
+						  }, function errorCallback(response) {
+							 
+		  });
+			
+			
+			//$scope.medRepList.splice(index,1)
+			// sera que se faz delete ?
 		}
 		
 		$http({
@@ -181,8 +232,60 @@ app.controller('cwCtrl', function($scope, $http,$rootScope){
   });
   
   
-  });
   
+  
+  $scope.submitRequest = function(){
+	  
+	$scope.newreqID = $scope.request.length
+	  
+	for (var i = 0; i < $scope.medRepBuffer.length;i++){
+		if ($scope.medRepBuffer[i].patID === $scope.selPat.patID) {
+		  var req = {
+					method: 'POST',
+					url: 'http://localhost:9000/add/request',
+					headers: {
+					'Content-Type': 'application/json'
+					},
+					data: { 
+							"reqID": $scope.newreqID++,
+							"repID": $scope.medRepBuffer[i].repID,
+							"status": "REQUESTED"
+						 }
+						 
+					}
+					$http(req).then(function successCallback(response) {
+					
+					
+					//$scope.medRepHist = response.data;
+					
+					}, function errorCallback(response) {
+					 
+					});	
+						
+					console.log('Insurance request sent!')	
+					
+		}
+	}
+		
+		$http({
+		method: 'DELETE',
+		url: 'http://localhost:9000/buffer/pat/'+$scope.selPat.patID
+			}).then(function successCallback(response) {
+				
+			$scope.medActList = response.data;
+
+		  }, function errorCallback(response) {
+			 
+		  });
+				
+	$scope.currentSection = 2
+	  
+  }
+  
+  
+  
+  
+})
 			
 	//~ app.controller('loginCtrl', function($scope,$http,$rootScope){		
 		//~ 

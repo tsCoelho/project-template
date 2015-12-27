@@ -25,6 +25,11 @@ exports.dropUser = function handler (request, reply) {
   reply(bl.dropUser(request.params.user,request.params.id))
 }
 
+exports.dropAllBuffRepsByPatID = function handler (request, reply) {
+  reply(bl.dropAllBuffRepsByPatID(request.params.id))
+}
+
+
 // Report
 exports.getReportByPatientID  = function handler (request, reply) {
   reply(bl.getReportByPatientID (request.params.patID))

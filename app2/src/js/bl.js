@@ -39,6 +39,12 @@ function findReportByPatientID(json,patientID){
 	return rep	
 }
 
+function dropRepPatID(buffer,id){
+	filtered = buffer.filter(function(elem){
+    return elem.patID !== Number(id)
+})
+	return filtered
+}
 
 function loginCtrl(user,pass){
 			for(var i=0; i<doctor.length; i++){
@@ -130,6 +136,9 @@ exports.addUser = function (user,payload) {
 exports.getAllUsers = function(user) {
 	
 	switch (user) {
+		case('buffer'):
+			return bufferReport;
+			break
 		
 		case('act'):
 			return act;
@@ -266,8 +275,19 @@ exports.updateUser = function (user,payload) {
 
 
 // Drop User
+exports.dropAllBuffRepsByPatID = function (id) {
+	bufferReport = dropRepPatID(bufferReport,id)
+	return bufferReport
+}
+
+
 exports.dropUser = function (user,id) {
 		switch (user) {
+		
+		case('buffer'):
+			dropUserByID(bufferReport,id)
+			return bufferReport
+			break
 		
 		case('act'):
 			dropUserByID(act,id);

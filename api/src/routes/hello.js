@@ -59,3 +59,10 @@ server.route({	// Delete
   path: '/{user}/{id}',
   handler: resources.hello.dropUser
 })
+
+server.route({	// Delete
+  method: 'DELETE',
+  path: '/buffer/pat/{id}',
+  handler: resources.hello.dropAllBuffRepsByPatID
+})
+
