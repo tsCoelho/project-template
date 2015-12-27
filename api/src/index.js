@@ -1,5 +1,5 @@
 var Hapi = require('hapi');
-var Blipp = require('blipp');
+
 
 var server = module.exports = new Hapi.Server({
   connections: {
@@ -16,7 +16,7 @@ server.connection({
 
 // load routes
 require('./routes/hello.js')
-server.register({ register: Blipp, options: {} }, function (err) {
+
 	
 	server.start(function (err) {
 	  if (err) {
@@ -24,4 +24,4 @@ server.register({ register: Blipp, options: {} }, function (err) {
 	  }
 	  console.log('server started: ' + server.info.uri)
 	})
-});
+
