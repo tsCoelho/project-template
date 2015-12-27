@@ -2,28 +2,22 @@ var bl = require('../../../bl/src')
 
 exports = module.exports
 
-
-exports.getPatID = function handler (request, reply) {
-  reply(bl.getPatient(request.params.id))
+exports.addUser = function handler (request, reply) {
+  reply(bl.addUser(request.params.user,request.payload))
+}
+exports.getAllUsers = function handler (request, reply) {
+  reply(bl.getAllUsers(request.params.user))
 }
 
-exports.getAllPatients = function handler (request, reply) {
-  reply(bl.getAllPatients())
+exports.getUser = function handler (request, reply) {
+  reply(bl.getUser(request.params.user,request.params.id))
 }
 
-exports.getAllDoctors = function handler (request, reply) {
-  reply(bl.getAllDoctors())
+exports.updateUser = function handler (request, reply) {
+  reply(bl.updateUser(request.params.user, request.payload))
 }
-//~ 
-//~ exports.getAllRequests= function handler (request, reply) {
-  //~ reply(bl.getAllRequests())
-//~ }
-//~ 
-//~ exports.getAllActs= function handler (request, reply) {
-  //~ reply(bl.getAllActs())
-//~ }
-//~ 
-//~ exports.addMedReport= function handler (request, reply) {
-  //~ reply(bl.addMedReport(request.payload.repID,request.payload.date,request.payload.docID,request.payload.patID,request.payload.actID,request.payload.actual_reimb_perc))
-//~ }
-//~ 
+
+exports.dropUser = function handler (request, reply) {
+  reply(bl.dropUser(request.params.user,request.params.id))
+}
+
