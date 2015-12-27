@@ -100,11 +100,16 @@
                <div class="col-sm-4">
                   <h2>Waiting list</h2>
                   <button  ng-click='testFunc(pat)' type="button" class="list-group-item btn-lg" ng-repeat="pat in patient | orderBy : 'name' ">
-                  {{pat.name}}
+                 P{{pat.patID}}    {{pat.name}} 
                   </button>
                </div>
                <div class="col-sm-8" >
                   <h2>Insurance Requests</h2>
+                  <div class="panel panel-info">
+                     <div class="panel-heading"><b>Requested</b></div>
+                    
+                     <div class="panel-body" ng-repeat ='r in request | filter: { status: "REQUESTED" } | orderBy: "-reqID" | limitTo:5:5 ' >{{r.reqID}}</div>
+                  </div>
                   <div class="panel panel-warning">
                      <div class="panel-heading"><b>Pending</b></div>
                     
@@ -174,7 +179,7 @@
 				<th>Name</th>
 				<th>Date</th>
 			  </tr>
-			<tr ng-repeat="h in medRepHist | orderBy: 'date' ">
+			<tr ng-repeat="h in medRepHist | orderBy: '-newdate' ">
 			  <td>{{ h.repID }}</td>
 			  <td> {{ act[h.actID].name }} </td>
 			  <td>{{h.date}}</td>

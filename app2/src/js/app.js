@@ -29,13 +29,18 @@ $scope.hello= function(){
 		if($scope.selPat.patID){
 		$http({
 			method: 'GET',
-			url: 'http://localhost:9000/report/'+$scope.selPat.patID
+			url: 'http://localhost:9000/rep/report/'+$scope.selPat.patID
 		}).then(function successCallback(response) {
 		
+		function processa(date){
+			   var parts = date.split("/");
+			   return new Date(parts[2], parts[1] - 1, parts[0]);
+			}
+		
 		$scope.medRepHist = response.data;
-		//~ for(var i = 0; i < $scope.medRepHist.length;i++){
-			//~ $scope.medRepHist[i].date = new Date($scope.medRepHist[i].date)
-		//~ }
+		for(var i = 0; i < $scope.medRepHist.length;i++){
+			$scope.medRepHist[i].newdate = processa($scope.medRepHist[i].date)
+		}
 		
 		$scope.repID = $scope.medRepHist.length
 		
@@ -146,7 +151,11 @@ $scope.hello= function(){
 		
 		}	
 				
-	
+	function convertDate(inputFormat) {
+		  function pad(s) { return (s < 10) ? '0' + s : s; }
+		  var d = new Date(inputFormat);
+		  return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+		}
 		// Add Medical Act to Patient
 		
 		$scope.addmedReport = function(medR){
@@ -160,7 +169,7 @@ $scope.hello= function(){
 				'Content-Type': 'application/json'
 				},
 				data: { "repID": $scope.repID++,
-						"date": "27/12/2015",
+						"date": convertDate(new Date().getTime()),
 						"docID": $scope.doc.docID,
 						"patID": $scope.selPat.patID,
 						"actID": $scope.selAct.actID,
@@ -196,7 +205,7 @@ $scope.hello= function(){
 		
 		
 		
-		$scope.selAct.reimb = computeReimb($scope.act_rmb,$scope.selAct.actID,$scope.selAct.policy_type)
+		$scope.selAct.reimb = computeReimb($scope.act_rmb,Number($scope.selAct.actID),Number($scope.selAct.policy_type))
 		
 		
 
@@ -262,10 +271,32 @@ $scope.hello= function(){
 					 
 					});	
 						
-					console.log('Insurance request sent!')	
+					console.log('Insurance request sent!')
+					
+					var req = {
+					method: 'POST',
+					url: 'http://localhost:9000/add/report',
+					headers: {
+					'Content-Type': 'application/json'
+					},
+					data: $scope.medRepBuffer[i]
+						 
+					}
+					$http(req).then(function successCallback(response) {
+					
+					
+					//$scope.medRepHist = response.data;
+					
+					}, function errorCallback(response) {
+					 
+					});	
+					
+						
 					
 		}
 	}
+	
+	
 		
 		$http({
 		method: 'DELETE',
@@ -273,6 +304,18 @@ $scope.hello= function(){
 			}).then(function successCallback(response) {
 				
 			$scope.medActList = response.data;
+
+		  }, function errorCallback(response) {
+			 
+		  });
+		  
+		  
+		  $http({
+				method: 'GET',
+				url: 'http://localhost:9000/request'
+			}).then(function successCallback(response) {
+			
+			$scope.request = response.data;
 
 		  }, function errorCallback(response) {
 			 

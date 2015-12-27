@@ -3,6 +3,17 @@ exports = module.exports
 var json;
 var id_field;
 
+
+function findR(acts,actId,policyType){
+    for (var i = 0;i <acts.length;i++){
+        if (acts[i].actID === actId && acts[i].policy_type === policyType){
+            return acts[i].reimb_percentage
+        }
+    }
+    return 1
+}
+
+
 function findUserByID(json,id) {
 	
 	id_field = Object.getOwnPropertyNames(json[0])[0] // assumed ID is ALWAYS the 1st field
@@ -38,6 +49,17 @@ function findReportByPatientID(json,patientID){
 	}
 	return rep	
 }
+
+function dropReprepIDpatID(json,repID,patID){
+	var rep = [];
+	for (var i = 0;i <json.length;i++){
+		if(json[i].patID !== Number(patID) || json[i].repID !== Number(repID)){
+			rep.push(json[i])
+		}
+	}
+	return rep
+}
+
 
 function dropRepPatID(buffer,id){
 	filtered = buffer.filter(function(elem){
@@ -174,13 +196,27 @@ exports.getAllUsers = function(user) {
 	}
 }
 
-// Read patient medical report
-
-exports.getReportByPatientID = function(patID){
-	return findReportByPatientID(report,patID)
+exports.getReimb = function(actID,policyType){
+	return findR(act_rmb,actID,policyType)
+	
 }
 
 
+// Read patient medical report
+
+exports.getReportByPatientID = function(name,patID){
+	
+	switch (name) {
+		case('report'):
+			return findReportByPatientID(report,patID)
+			break;
+			
+		case('buffer'):
+			return findReportByPatientID(bufferReport,patID)
+			break;
+	}
+
+}
 
 // Read User by ID
 exports.getUser = function(user,id) {
@@ -280,6 +316,10 @@ exports.dropAllBuffRepsByPatID = function (id) {
 	return bufferReport
 }
 
+exports.dropRepbyIdPat = function (repID,patID) {
+	dropReprepIDpatID(bufferReport,repID,patID)
+	return bufferReport
+}
 
 exports.dropUser = function (user,id) {
 		switch (user) {

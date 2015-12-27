@@ -35,6 +35,13 @@ server.route({	// Read all
   handler: resources.hello.getAllUsers
 })
 
+server.route({	// 
+  method: 'GET',
+  path: '/reimb/act/{id}/pol/{type}',
+  handler: resources.hello.getReimb
+})
+
+
 server.route({	// Read
   method: 'GET',
   path: '/{user}/{id}',
@@ -43,7 +50,7 @@ server.route({	// Read
 
 server.route({	// Read report by Patient ID
   method: 'GET',
-  path: '/report/{patID}',
+  path: '/rep/{name}/{patID}',
   handler: resources.hello.getReportByPatientID
 })
 
@@ -64,5 +71,12 @@ server.route({	// Delete
   method: 'DELETE',
   path: '/buffer/pat/{id}',
   handler: resources.hello.dropAllBuffRepsByPatID
+})
+
+
+server.route({	// Delete
+  method: 'DELETE',
+  path: '/buffer/rep/{repID}/pat/{patID}',
+  handler: resources.hello.dropRepbyIdPat
 })
 
