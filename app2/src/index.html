@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
    <head>
       <title>Log in page</title>
       <meta charset="utf-8">
@@ -11,12 +12,9 @@
       <script src="/js/bl.js"></script>
       <script src="/js/app.js"></script>
    </head>
-   <!--background-color:  #f4511e-->
+  
    <style>
-	   
-	   .body{
-		   background-color:#21B6A8;
-	   }
+	      
       .jumbotron { 
       padding-top: 150px;
       background-color:#21B6A8 ; 
@@ -32,39 +30,42 @@
       color: #ffffff;
       }
    </style>
-   <body class = "container" data-ng-app='app'  data-ng-controller="cwCtrl" data-ng-init="currentSection = 1" >
-      <div class = "log-in-page" ng-show= "currentSection === 1" > 
-         <!-- 1 -->
+
+   <body class = "container" data-ng-app="app" data-ng-controller="cwCtrl" data-ng-init="currentSection = 1" >
+
+      <!--Page 1 -->
+      <div class = "log-in-page" ng-show= "currentSection === 1"  id="Page1"> 
          <div class="jumbotron text-center">
             <h1>InSure App+</h1>
             <div class="container-fluid">
-               <form class="form-signin">
-                  <label for="inputUser" class="sr-only">Username</label>
-                  <input type="user" id="inputUser" class="col-sm-10 form-control" size="1" placeholder="Username" required autofocus>
-                  <label for="inputPassword" class="sr-only">Password</label>
-                  <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                  <span class="help-block text-right" >Forgot your password?</span>
-                  <button class="btn btn-lg  btn-sucess sign-in-btn"  ng-click="changeSect()">Sign in</button>
+               <form class="form-signin" name="loginForm">
+		  
+		  <!-- Username -->
+		  <div class="form-group" align="left">
+		  <label for="inputUser">Username:</label>
+                  <input type="user" id="inputUser" class="col-sm-8 form-control" size="1" placeholder="Enter your username" name="username" data-ng-model="username" required autofocus>
+		  </div>
                   
-                  
-                  <!--- type="submit">
-                     <div class="checkbox text-left">
-                     <label>
-                     <input type="checkbox" value="remember-me"> Remember me          
-                     </label>
-                     </div>
-                     -->
-                     				
-                  <span class="help-block" >Create an account</span>
+		  <!-- Password -->
+		  <div class="form-group" align="left">
+		  <label for="inputPassword"">Password:</label>
+                  <input type="password" id="inputPassword" class="col-sm-8 form-control" placeholder="Insert your password" name="password" data-ng-model="password" required>
+		  </div>
+		  
+		  <!-- Forgot Password -->
+		  <span class="help-block text-right">Forgot your password?</span>
+
+                  <!-- Login --> 
+                  <button class="btn btn-lg  btn-sucess sign-in-btn"  ng-click="authUser(username,password)" id="submit">Sign in</button> 
+		  <strong style="font-size:15px;color:red;">{{default_mess}}</strong>                    				
                </form>
             </div>
-            <!-- /container -->
          </div>
       </div>
-      <!-- 1b -->
-      <div ng-show= "currentSection === 2">
+
+      <!-- Page 2 -->
+      <div ng-show= "currentSection === 2" id="Page2">
 		  
-         <!--2-->
          <nav class="navbar">
             <div class="container-fluid">
                <div class="navbar-header">
@@ -83,7 +84,7 @@
                      <li><a href="#">Medical Reports</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Dr. Egas Moniz</a></li>
+                     <li><a href="#"><span class="glyphicon glyphicon-user" style="font-size:30px;"></span> {{doc.name}}</a></li>
                      <li>
                         <span>
                            <div class="spacer10"></div>
@@ -146,7 +147,7 @@
                      <li><a href="#">Medical Reports</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                     <li><a href="#"><span class="glyphicon glyphicon-user"></span> Dr. Egas Moniz</a></li>
+                     <li><a href="#"><span class="glyphicon glyphicon-user" style="font-size:30px;"></span> {{doc.name}}</a></li>
                      <li>
                         <span>
                            <div class="spacer10"></div>
@@ -165,12 +166,24 @@
                   <li class="list-group-item">Patient ID: {{selPat.patID}} </li>
                   <li class="list-group-item">Policy type: {{selPat.policy_type}} </li>
             </ul>
-            </div>
-            <div class="col-sm-4" >
-			<h3>Medical History</h3>
-			<div>
+           
+            <h4>Medical history</h4>
+             <table class="table" >
+				<tr>
+				<th>RepID</th>
+				<th>Name</th>
+				<th>Date</th>
+			  </tr>
+			<tr ng-repeat="h in medRepHist | orderBy: 'date' ">
+			  <td>{{ h.repID }}</td>
+			  <td> {{ act[h.actID].name }} </td>
+			  <td>{{h.date}}</td>
+			</tr>
+			  </table>
             
-            <div class="col-sm-8" ng-controller = 'medActCtrl'>
+            </div>
+            
+            <div class="col-sm-8">
 						<h2>Medical acts</h2>
 				  <table class="table table-striped" >
 					   <tr>
@@ -179,12 +192,12 @@
 				<th>Reimbursement</th>
 				<th></th>
 			  </tr>
-			<tr ng-repeat="m in medreplist">
-			  <td>{{ m.name }}</td>
-			  <td> {{ m.cost }} </td>
-			  <td>10</td>
+			<tr ng-repeat="mrep in medRepList">
+			  <td>{{ mrep.name }}</td>
+			  <td> {{ mrep.cost }} </td>
+			  <td> </td>
 			  <td>
-				<button type="button" class="btn btn-default" ng-click = 'medActList.splice($index,1)'><b>Delete</b></button>
+				<button type="button" class="btn btn-default" ng-click = 'dropmedReport($index)'><b>Delete</b></button>
 				</td>
 			</tr>
 			  </table>
@@ -196,14 +209,14 @@
 
 			  </button>
 			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1" >
-				<li><a href="#" ng-repeat="a in act" ng-click = 'medreplist.push({name:a.name, cost:a.cost})' >{{a.name}} </a></li>
+				<li><a href="#" ng-repeat="a in act" ng-click = 'addmedReport(a)' >{{a.name}} </a></li>
 			  </ul>
 			</div>
 
 		
-  </div>
+			</div>
 
-               
+                <button type="button" class="btn-lg btn-success center-block" ng-click = 'submitRequest()' ng-disabled = 'medRepList.length === 0'>Submit</button>
 
 			</div>
 

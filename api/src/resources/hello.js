@@ -2,6 +2,10 @@ var bl = require('../../../bl/src')
 
 exports = module.exports
 
+exports.login = function handler (request, reply) {
+  reply(bl.login(request.payload.user,request.payload.pass))
+}
+
 exports.addUser = function handler (request, reply) {
   reply(bl.addUser(request.params.user,request.payload))
 }
@@ -21,3 +25,11 @@ exports.dropUser = function handler (request, reply) {
   reply(bl.dropUser(request.params.user,request.params.id))
 }
 
+// Report
+exports.getReportByPatientID  = function handler (request, reply) {
+  reply(bl.getReportByPatientID (request.params.patID))
+}
+
+exports.addBufferReport = function handler(request,reply){
+	reply(bl.addBufferReport(request.payload))
+}
