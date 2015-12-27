@@ -66,7 +66,7 @@
       <!-- Page 2 -->
       <div ng-show= "currentSection === 2" id="Page2" data-ng-init = 'hello()'>
 		  
-         <nav class="navbar">
+                         <nav class="navbar">
             <div class="container-fluid">
                <div class="navbar-header">
                   <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -74,14 +74,14 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>                        
                   </button>
-                  <a class="navbar-brand" href="#">InSure App</a>
+                  <a class="navbar-brand" href="#" ng-click = 'currentSection = 1'>InSure App</a>
                </div>
                <div class="collapse navbar-collapse" id="myNavbar">
                   <ul class="nav navbar-nav">
-                     <li class="active"><a href="#">Home</a></li>
-                     <li><a href="#">Patients</a></li>
+					  <li><a href="#" ng-click = 'currentSection = 2'>Patient List </a></li>
+                    <!-- <li class="active"><a href="#">Home</a></li> 
                      <li><a href="#">Medical Acts</a></li>
-                     <li><a href="#">Medical Reports</a></li>
+                     <li><a href="#">Medical Reports</a></li>-->
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                      <li><a href="#"><span class="glyphicon glyphicon-user" style="font-size:30px;"></span> {{doc.name}}</a></li>
@@ -142,14 +142,14 @@
                   <span class="icon-bar"></span>
                   <span class="icon-bar"></span>                        
                   </button>
-                  <a class="navbar-brand" href="#">InSure App</a>
+                  <a class="navbar-brand" href="#" ng-click = 'currentSection = 1'>InSure App</a>
                </div>
                <div class="collapse navbar-collapse" id="myNavbar">
                   <ul class="nav navbar-nav">
-                     <li class="active"><a href="#">Home</a></li>
-                     <li><a href="#" ng-click = 'currentSection = 2'>Patient List </a></li>
+					  <li><a href="#" ng-click = 'currentSection = 2'>Patient List </a></li>
+                    <!-- <li class="active"><a href="#">Home</a></li> 
                      <li><a href="#">Medical Acts</a></li>
-                     <li><a href="#">Medical Reports</a></li>
+                     <li><a href="#">Medical Reports</a></li>-->
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                      <li><a href="#"><span class="glyphicon glyphicon-user" style="font-size:30px;"></span> {{doc.name}}</a></li>
@@ -175,7 +175,7 @@
             <h4>Medical history</h4>
              <table class="table" >
 				<tr>
-				<th>RepID</th>
+				<th>Report ID</th>
 				<th>Name</th>
 				<th>Date</th>
 			  </tr>
