@@ -1,3 +1,5 @@
+fs = require('fs')
+
 exports = module.exports
 var json;
 var id_field;
@@ -158,6 +160,7 @@ exports.getAllUsers = function(user) {
 	
 	switch (user) {
 		case('buffer'):
+			
 			return bufferReport;
 			break
 		
@@ -185,6 +188,11 @@ exports.getAllUsers = function(user) {
 			return report;
 			break;
 			
+		case('save'):
+			fs.writeFileSync('./reports_saved.json', JSON.stringify(report))
+			fs.writeFileSync('./requests_saved.json', JSON.stringify(request))
+			break
+		
 		case('request'):
 			return request;
 			break;
@@ -377,18 +385,3 @@ var act_rmb = require('../../data/acts-rmb.json')
 var report = require('../../data/reports.json')
 var request = require('../../data/requests.json')
 var bufferReport = require('../../data/bufferReports.json')
-/*
-var patient = [{"patID":0,"name":"Tomás Silva","policy_number":1000,"policy_type":0},{"patID":1,"name":"Tomás Santos","policy_number":1001,"policy_type":2},{"patID":2,"name":"Francisco Santos","policy_number":1002,"policy_type":1},{"patID":3,"name":"Mariana Pereira","policy_number":1003,"policy_type":2}]
-
-var mediator = [{"medID":0,"name":"Beatriz Santos","user":"med0","pass":"pass"},{"medID":1,"name":"Guilherme Silva","user":"med1","pass":"pass"},{"medID":2,"name":"Rodrigo Santos","user":"med2","pass":"pass"}]
-
-var act = [{"actID":0,"name":"consulta","cost":50},{"actID":1,"name":"raio-X","cost":100},{"actID":2,"name":"tomografia","cost":150},{"actID":3,"name":"exame","cost":75},{"actID":4,"name":"cirurgia","cost":5000},{"actID":5,"name":"transfusão","cost":1000},{"actID":6,"name":"ecograma","cost":200}]
-
-var doctor = [{"docID":0,"name":"Leonor Pereira","speciality":"Clínica Geral","user":"doc0","pass":"pass"},{"docID":1,"name":"João Santos","speciality":"Ortopedia","user":"doc1","pass":"pass"}]
-
-var act_rmb = [{"actID":0,"policy_type":0,"reimb_percentage":1},{"actID":0,"policy_type":1,"reimb_percentage":0.8},{"actID":0,"policy_type":2,"reimb_percentage":0.5},{"actID":0,"policy_type":3,"reimb_percentage":0.2},{"actID":1,"policy_type":0,"reimb_percentage":1},{"actID":1,"policy_type":1,"reimb_percentage":0.8},{"actID":1,"policy_type":2,"reimb_percentage":0.5},{"actID":1,"policy_type":3,"reimb_percentage":0.2},{"actID":2,"policy_type":0,"reimb_percentage":1},{"actID":2,"policy_type":1,"reimb_percentage":0.8},{"actID":2,"policy_type":2,"reimb_percentage":0.5},{"actID":2,"policy_type":3,"reimb_percentage":0.2},{"actID":3,"policy_type":0,"reimb_percentage":1},{"actID":3,"policy_type":1,"reimb_percentage":0.8},{"actID":3,"policy_type":2,"reimb_percentage":0.5},{"actID":3,"policy_type":3,"reimb_percentage":0.2},{"actID":4,"policy_type":0,"reimb_percentage":1},{"actID":4,"policy_type":1,"reimb_percentage":0.8},{"actID":4,"policy_type":2,"reimb_percentage":0.5},{"actID":4,"policy_type":3,"reimb_percentage":0.2},{"actID":5,"policy_type":0,"reimb_percentage":1},{"actID":5,"policy_type":1,"reimb_percentage":0.8},{"actID":5,"policy_type":2,"reimb_percentage":0.5},{"actID":5,"policy_type":3,"reimb_percentage":0.2},{"actID":6,"policy_type":0,"reimb_percentage":1},{"actID":6,"policy_type":1,"reimb_percentage":0.8},{"actID":6,"policy_type":2,"reimb_percentage":0.5},{"actID":6,"policy_type":3,"reimb_percentage":0.2}]
-
-var report = [{"repID":0,"date":"1/1/2012","docID":7,"patID":0,"actID":3,"actual_reimb_perc":1},{"repID":1,"date":"4/8/2012","docID":7,"patID":0,"actID":6,"actual_reimb_perc":1},{"repID":2,"date":"10/11/2014","docID":7,"patID":0,"actID":4,"actual_reimb_perc":1},{"repID":3,"date":"18/2/2010","docID":2,"patID":0,"actID":4,"actual_reimb_perc":1}]
-
-var request = [{"reqID":0,"repID":99,"status":"REJECTED"},{"reqID":1,"repID":98,"status":"REQUESTED"},{"reqID":2,"repID":97,"status":"REJECTED"},{"reqID":3,"repID":96,"status":"PENDING"},{"reqID":4,"repID":95,"status":"ACCEPTED"},{"reqID":5,"repID":94,"status":"REQUESTED"},{"reqID":6,"repID":93,"status":"PENDING"},{"reqID":7,"repID":92,"status":"PENDING"},{"reqID":8,"repID":91,"status":"PENDING"},{"reqID":9,"repID":90,"status":"PENDING"},{"reqID":10,"repID":89,"status":"REQUESTED"},{"reqID":11,"repID":88,"status":"REQUESTED"},{"reqID":12,"repID":87,"status":"REQUESTED"},{"reqID":13,"repID":86,"status":"REQUESTED"},{"reqID":14,"repID":85,"status":"REQUESTED"},{"reqID":15,"repID":84,"status":"ACCEPTED"},{"reqID":16,"repID":83,"status":"PENDING"},{"reqID":17,"repID":82,"status":"PENDING"},{"reqID":18,"repID":81,"status":"REJECTED"},{"reqID":19,"repID":80,"status":"REQUESTED"}]
-*/
